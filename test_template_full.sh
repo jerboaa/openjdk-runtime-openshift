@@ -21,9 +21,9 @@ fi
 
 oc new-project $project
 oc process -p S2I_APP=$s2i_name -p NAMESPACE=$project -p APP_NAME=$runtime_app_name -p OPENJDK_VERSION=$version -p OPENJDK_PKG_NAME=$pkg -f openjdk_runtime_app_template_full.yaml | oc create -f -
-url="$(echo http://$(oc get route $runtime_app_name --template '{{.spec.host}}'))"
+url="$(echo http://$(oc get route $runtime_app_name --template '{{.spec.host}}'))/hello"
 output="$(curl -s $url)"
-expected="Hello World"
+expected="hello"
 maxtries=240
 echo -n "Waiting for runtime app: $runtime_app_name to become available: "
 while test "${output}_" != "Hello World_" && test $maxtries -gt 0; do
