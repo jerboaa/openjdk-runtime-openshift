@@ -4,8 +4,7 @@ metadata:
   name: openjdk-runtime-app-example
   annotations:
     description: >-
-      OpenJDK 11 runtime application templated example
-      Runtime application name: ${APP_NAME}
+      OpenJDK ${OPENJDK_VERSION} runtime application templated example
 message: "OpenJDK runtime application example created as: ${APP_NAME}"
 objects:
 - apiVersion: image.openshift.io/v1
