@@ -71,9 +71,9 @@ objects:
         name: ${S2I_APP}:latest
     runPolicy: Serial
     source:
-      contextDir: undertow-servlet
+      contextDir: getting-started
       git:
-        uri: https://github.com/jboss-openshift/openshift-quickstarts
+        uri: https://github.com/quarkusio/quarkus-quickstarts
     strategy:
       sourceStrategy:
         from:
@@ -177,7 +177,7 @@ objects:
         RUN dnf install -y ${OPENJDK_PKG_NAME} && dnf -y clean all
         RUN mkdir /work
         WORKDIR /work/
-        COPY undertow-servlet.jar /work/application.jar
+        COPY getting-started-1.0-SNAPSHOT-runner.jar /work/application.jar
 
         # set up permissions for user `1001`
         RUN chmod 775 /work \
@@ -190,14 +190,14 @@ objects:
         ENV DEFAULT_JAVA_OPTS="-XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90"
 
         CMD java $DEFAULT_JAVA_OPTS -jar /work/application.jar
-      ## Stage 1: Map /deployments/undertow-servlet.jar into the build image
+      ## Stage 1: Map /deployments folder into the build image
       ##          so as to be able to assemble the runtime image, based on ubi8
       images:
         - from:
             kind: ImageStreamTag
             name: ${S2I_APP}:latest
           paths:
-          - sourcePath: /deployments/undertow-servlet.jar
+          - sourcePath: /deployments/getting-started-1.0-SNAPSHOT-runner.jar
             destinationDir: "."
     strategy:
       dockerStrategy:
